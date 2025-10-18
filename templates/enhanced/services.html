@@ -1,0 +1,461 @@
+{% extends "enhanced/base.html" %}
+
+{% block title %}Services - {{ company_settings.company_name }}{% endblock %}
+{% block description %}Comprehensive investment facilitation services in Equatorial Guinea and Africa. Market access, government relations, ESG excellence, and investor concierge services.{% endblock %}
+
+{% block content %}
+<!-- Page Header -->
+<section class="page-header">
+    <div class="page-header-content scroll-reveal">
+        <h1>Our Services</h1>
+        <p>Providing end-to-end support for sophisticated investors seeking premier opportunities in African markets. We are your strategic partner for growth, compliance, and success.</p>
+    </div>
+</section>
+
+<!-- Services Section -->
+<section class="section">
+    {% for service in services %}
+    <div class="service-detail-item scroll-reveal" data-service="{{ loop.index }}">
+        <div class="service-content {% if loop.index % 2 == 0 %}reverse{% endif %}">
+            <div class="service-image">
+                <img src="{{ service.image }}" alt="{{ service.title }}" loading="lazy">
+                <div class="service-overlay">
+                    <div class="service-number">{{ "%02d"|format(loop.index) }}</div>
+                </div>
+            </div>
+            
+            <div class="service-text">
+                <div class="service-category">
+                    {% if loop.index == 1 %}Strategic Solutions
+                    {% elif loop.index == 2 %}Government Affairs
+                    {% elif loop.index == 3 %}Sustainability
+                    {% else %}Premium Services{% endif %}
+                </div>
+                
+                <h2>{{ service.title }}</h2>
+                <p class="service-subtitle">{{ service.subtitle }}</p>
+                
+                <div class="service-features">
+                    <h3>Key Benefits:</h3>
+                    <ul>
+                        {% for feature in service.features %}
+                        <li>
+                            <span class="feature-check">✓</span>
+                            {{ feature }}
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                
+                <div class="service-actions">
+                    <a href="{{ url_for('contact_page') }}" class="btn-primary" 
+                       onclick="gtag('event', 'click', {'event_category': 'Services', 'event_label': '{{ service.title }}'});">
+                        Get Started
+                    </a>
+                    <div class="service-contact">
+                        <span class="contact-info">
+                            📞 {{ company_settings.phone }} | 📧 {{ company_settings.email }}
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</section>
+
+<!-- Process Section -->
+<section class="section process-section">
+    <div class="section-header scroll-reveal">
+        <h2>Our Investment Facilitation Process</h2>
+        <p>A proven methodology that ensures successful project execution and investor satisfaction.</p>
+    </div>
+    
+    <div class="process-timeline">
+        <div class="timeline-item scroll-reveal">
+            <div class="timeline-number">01</div>
+            <div class="timeline-content">
+                <h3>Initial Consultation</h3>
+                <p>Comprehensive assessment of investment objectives, risk tolerance, and market preferences.</p>
+            </div>
+        </div>
+        
+        <div class="timeline-item scroll-reveal">
+            <div class="timeline-number">02</div>
+            <div class="timeline-content">
+                <h3>Market Analysis</h3>
+                <p>In-depth market research, opportunity identification, and feasibility studies.</p>
+            </div>
+        </div>
+        
+        <div class="timeline-item scroll-reveal">
+            <div class="timeline-number">03</div>
+            <div class="timeline-content">
+                <h3>Due Diligence</h3>
+                <p>Thorough project evaluation, risk assessment, and regulatory compliance review.</p>
+            </div>
+        </div>
+        
+        <div class="timeline-item scroll-reveal">
+            <div class="timeline-number">04</div>
+            <div class="timeline-content">
+                <h3>Government Relations</h3>
+                <p>Liaison with government agencies, permit acquisition, and regulatory navigation.</p>
+            </div>
+        </div>
+        
+        <div class="timeline-item scroll-reveal">
+            <div class="timeline-number">05</div>
+            <div class="timeline-content">
+                <h3>Project Execution</h3>
+                <p>Implementation support, progress monitoring, and ongoing project management.</p>
+            </div>
+        </div>
+        
+        <div class="timeline-item scroll-reveal">
+            <div class="timeline-number">06</div>
+            <div class="timeline-content">
+                <h3>Success & Support</h3>
+                <p>Post-implementation support, performance tracking, and expansion opportunities.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Why Choose Us Section -->
+<section class="section why-choose-section">
+    <div class="section-header scroll-reveal">
+        <h2>Why Choose Blackstone EG & Partners?</h2>
+        <p>Unmatched expertise and proven results in African investment facilitation.</p>
+    </div>
+    
+    <div class="advantages-grid">
+        <div class="advantage-card scroll-reveal">
+            <div class="advantage-icon">🎯</div>
+            <h3>Local Expertise</h3>
+            <p>Deep understanding of Equatorial Guinea's business environment, regulations, and cultural nuances.</p>
+        </div>
+        
+        <div class="advantage-card scroll-reveal">
+            <div class="advantage-icon">🌐</div>
+            <h3>Global Standards</h3>
+            <p>International best practices combined with local market knowledge for optimal results.</p>
+        </div>
+        
+        <div class="advantage-card scroll-reveal">
+            <div class="advantage-icon">📈</div>
+            <h3>Proven Track Record</h3>
+            <p>100% success rate with over $2B in facilitated investments across multiple sectors.</p>
+        </div>
+        
+        <div class="advantage-card scroll-reveal">
+            <div class="advantage-icon">🤝</div>
+            <h3>Government Relations</h3>
+            <p>Strong relationships with key government officials and regulatory bodies.</p>
+        </div>
+        
+        <div class="advantage-card scroll-reveal">
+            <div class="advantage-icon">⚙️</div>
+            <h3>End-to-End Service</h3>
+            <p>Complete support from initial consultation to project completion and beyond.</p>
+        </div>
+        
+        <div class="advantage-card scroll-reveal">
+            <div class="advantage-icon">🛡️</div>
+            <div class="advantage-icon">🛡️</div>
+            <h3>Risk Mitigation</h3>
+            <p>Comprehensive risk assessment and mitigation strategies to protect your investment.</p>
+        </div>
+    </div>
+</section>
+
+<!-- CTA Section -->
+<section class="section cta-section">
+    <div class="cta-container scroll-reveal">
+        <h2>Ready to Explore Investment Opportunities?</h2>
+        <p>Schedule a consultation with our investment specialists to discuss your objectives and discover tailored opportunities in Africa's most promising markets.</p>
+        <div class="cta-buttons">
+            <a href="{{ url_for('contact_page') }}" class="btn-primary">Schedule Consultation</a>
+            <a href="{{ url_for('portfolio_page') }}" class="btn-secondary">View Our Portfolio</a>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+.service-detail-item {
+    margin-bottom: 120px;
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.service-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: center;
+}
+
+.service-content.reverse {
+    direction: rtl;
+}
+
+.service-content.reverse > * {
+    direction: ltr;
+}
+
+.service-image {
+    position: relative;
+    border-radius: 20px;
+    overflow: hidden;
+    height: 400px;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+}
+
+.service-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.4s ease;
+}
+
+.service-detail-item:hover .service-image img {
+    transform: scale(1.05);
+}
+
+.service-overlay {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    width: 60px;
+    height: 60px;
+    background: var(--primary-gold);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    color: var(--dark-navy);
+    font-size: 1.2rem;
+}
+
+.service-category {
+    background: rgba(201, 169, 97, 0.2);
+    color: var(--primary-gold);
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    display: inline-block;
+    margin-bottom: 20px;
+}
+
+.service-text h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.5rem;
+    font-weight: 600;
+    margin-bottom: 20px;
+    color: var(--primary-gold);
+}
+
+.service-subtitle {
+    font-size: 1.2rem;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.8);
+    margin-bottom: 30px;
+    line-height: 1.6;
+}
+
+.service-features h3 {
+    color: white;
+    margin-bottom: 20px;
+    font-size: 1.2rem;
+}
+
+.service-features ul {
+    list-style: none;
+    padding: 0;
+}
+
+.service-features li {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 15px;
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 1.05rem;
+}
+
+.feature-check {
+    color: var(--primary-gold);
+    font-weight: 700;
+    margin-right: 15px;
+    margin-top: 2px;
+    flex-shrink: 0;
+}
+
+.service-actions {
+    margin-top: 40px;
+}
+
+.service-contact {
+    margin-top: 20px;
+}
+
+.contact-info {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.9rem;
+}
+
+/* Process Timeline */
+.process-section {
+    background: linear-gradient(135deg, var(--charcoal) 0%, var(--dark-navy) 100%);
+}
+
+.process-timeline {
+    max-width: 800px;
+    margin: 0 auto;
+    position: relative;
+}
+
+.process-timeline::before {
+    content: '';
+    position: absolute;
+    left: 30px;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: linear-gradient(to bottom, var(--primary-gold), var(--secondary-gold));
+}
+
+.timeline-item {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 60px;
+    position: relative;
+}
+
+.timeline-number {
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(135deg, var(--primary-gold), var(--secondary-gold));
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    color: var(--dark-navy);
+    font-size: 1.2rem;
+    flex-shrink: 0;
+    z-index: 2;
+}
+
+.timeline-content {
+    margin-left: 40px;
+    background: var(--glass-bg);
+    backdrop-filter: blur(20px);
+    border: 1px solid var(--glass-border);
+    border-radius: 15px;
+    padding: 30px;
+    flex: 1;
+}
+
+.timeline-content h3 {
+    color: var(--primary-gold);
+    margin-bottom: 10px;
+    font-size: 1.3rem;
+}
+
+.timeline-content p {
+    color: rgba(255, 255, 255, 0.8);
+    line-height: 1.6;
+    margin: 0;
+}
+
+/* Advantages Grid */
+.advantages-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.advantage-card {
+    background: var(--glass-bg);
+    backdrop-filter: blur(20px);
+    border: 1px solid var(--glass-border);
+    border-radius: 20px;
+    padding: 40px 30px;
+    text-align: center;
+    transition: all 0.4s ease;
+}
+
+.advantage-card:hover {
+    transform: translateY(-10px);
+    border-color: rgba(201, 169, 97, 0.3);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+}
+
+.advantage-icon {
+    font-size: 3rem;
+    margin-bottom: 20px;
+    opacity: 0.8;
+}
+
+.advantage-card h3 {
+    color: var(--primary-gold);
+    margin-bottom: 15px;
+    font-size: 1.3rem;
+}
+
+.advantage-card p {
+    color: rgba(255, 255, 255, 0.8);
+    line-height: 1.6;
+    margin: 0;
+}
+
+/* Responsive Design */
+@media (max-width: 992px) {
+    .service-content, .service-content.reverse {
+        grid-template-columns: 1fr;
+        gap: 40px;
+        direction: ltr;
+    }
+    
+    .service-image {
+        height: 300px;
+    }
+    
+    .service-text h2 {
+        font-size: 2rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .service-detail-item {
+        margin-bottom: 80px;
+    }
+    
+    .process-timeline::before {
+        left: 15px;
+    }
+    
+    .timeline-number {
+        width: 40px;
+        height: 40px;
+        font-size: 1rem;
+    }
+    
+    .timeline-content {
+        margin-left: 25px;
+        padding: 20px;
+    }
+    
+    .advantages-grid {
+        grid-template-columns: 1fr;
+    }
+}
+</style>
+{% endblock %}

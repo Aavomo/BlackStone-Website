@@ -1,0 +1,110 @@
+{% extends "enhanced/base.html" %}
+
+{% block title %}About Us - {{ settings.name }}{% endblock %}
+
+{% block content %}
+<section class="hero-section">
+    <div class="hero-content">
+        <h1 class="hero-title">About Blackstone EG & Partners</h1>
+        <p class="hero-subtitle">Facilitating investments and providing strategic access to African markets through government relations and consulting excellence</p>
+    </div>
+</section>
+
+<section class="section">
+    <div class="container">
+        <div class="about-content">
+            <div class="about-text glass">
+                <h2>Strategic Gateway to Africa</h2>
+                <p>Blackstone EG & Partners stands at the forefront of African investment facilitation, bridging the gap between global capital and Equatorial Guinea's extraordinary potential.We partner with investors and business leaders to navigate complex regulatory environments, facilitate access to government officials, and execute strategic projects. Our collaborative approach and extensive network have consistently delivered successful outcomes for our clients and their ventures.</p>
+                <p>Our deep-rooted expertise in government relations, regulatory frameworks, and market dynamics positions us as the premier gateway for international investors seeking sustainable, high-impact opportunities in one of Africa's most strategic markets.</p>
+                
+                
+                
+            </div>
+            
+           
+                
+              
+        </div>
+    </div>
+</section>
+
+<section class="section bg-light">
+    <div class="container">
+        <div class="section-header">
+            <h2>Our Philosophy</h2>
+            <p>We believe in facilitating successful investments through strategic access, government relations, and comprehensive project support.</p>
+        </div>
+        
+        <div class="philosophy-grid">
+            <div class="philosophy-card glass">
+                <div class="philosophy-icon">
+                    <i class="fas fa-handshake"></i>
+                </div>
+                <h3>Strategic Facilitation</h3>
+                <p>We connect investors with high-value opportunities, providing strategic guidance and facilitating successful project execution through our extensive network.</p>
+            </div>
+            
+            <div class="philosophy-card glass">
+                <div class="philosophy-icon">
+                    <i class="fas fa-chart-line"></i>
+                </div>
+                <h3>Market Access</h3>
+                <p>Our deep understanding of local markets and regulatory environments enables us to facilitate smooth market entry and project implementation for international investors.</p>
+            </div>
+            
+            <div class="philosophy-card glass">
+                <div class="philosophy-icon">
+                    <i class="fas fa-globe"></i>
+                </div>
+                <h3>Government Relations</h3>
+                <p>Strong relationships with key government officials and regulatory bodies provide our clients with unparalleled access and support for their investment initiatives.</p>
+            </div>
+            
+            <div class="philosophy-card glass">
+                <div class="philosophy-icon">
+                    <i class="fas fa-clock"></i>
+                </div>
+                <h3>End-to-End Support</h3>
+                <p>We provide comprehensive project support from initial consultation through execution and beyond, ensuring successful outcomes for all stakeholders.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="section bg-light">
+    <div class="container">
+        <div class="section-header">
+            <h2>ESG Commitment</h2>
+            <p>Environmental, Social, and Governance considerations are integral to our investment process.</p>
+        </div>
+        
+        <div class="esg-content glass">
+            <div class="esg-pillar">
+                <h3><i class="fas fa-leaf"></i> Environmental</h3>
+                <p>We support sustainable business practices and environmental stewardship across our portfolio companies, promoting energy efficiency and responsible resource management.</p>
+            </div>
+            
+            <div class="esg-pillar">
+                <h3><i class="fas fa-users"></i> Social</h3>
+                <p>We prioritize workplace diversity, employee development, and community engagement, ensuring our investments contribute positively to society.</p>
+            </div>
+            
+            <div class="esg-pillar">
+                <h3><i class="fas fa-shield-alt"></i> Governance</h3>
+                <p>We maintain strong governance practices and promote ethical business conduct, transparency, and accountability throughout our organization and portfolio.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="section">
+    <div class="container">
+        <div class="cta-section glass">
+            <h2>Partner With Us</h2>
+            <p>Discover how Blackstone EG & Partners can help accelerate your company's growth and success.</p>
+            <a href="{{ url_for('contact_page') }}" class="btn btn-primary">Start a Conversation</a>
+        </div>
+    </div>
+</section>
+{% endblock %}

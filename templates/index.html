@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero" id="home">
+    <div class="hero-content">
+        <h1>BLACKSTONE EG & PARTNERS</h1>
+        <p class="hero-subtitle">Your Trusted Partner In Equatorial Guinea.</p>
+        <div class="hero-buttons">
+            <a href="{{ url_for('contact_page') }}" class="btn-primary">Explore Opportunities</a>
+            <a href="{{ url_for('services_page') }}" class="btn-secondary">Our Services</a>
+        </div>
+    </div>
+</section>
+
+<!-- Services Preview Section -->
+<section class="section">
+    <div class="section-header">
+        <h2>Our Services</h2>
+        <p>Providing end-to-end support for sophisticated investors seeking premier opportunities in African markets.</p>
+    </div>
+    
+    <div class="services-grid">
+        {% for service in services %}
+        <div class="service-card">
+            <h3>{{ service.title }}</h3>
+            <p>{{ service.subtitle }}</p>
+        </div>
+        {% endfor %}
+    </div>
+    
+    <div style="text-align: center; margin-top: 40px;">
+        <a href="{{ url_for('services_page') }}" class="btn-primary">View All Services</a>
+    </div>
+</section>
+
+<!-- About Preview -->
+<section class="section" style="background: linear-gradient(135deg, #1A1D29 0%, #0A0E1A 100%);">
+    <div class="section-header">
+        <h2>Pioneering African Investment Excellence</h2>
+        <p>Blackstone EG & Partners stands at the forefront of African investment facilitation, bridging the gap between global capital and Equatorial Guinea's extraordinary potential.</p>
+    </div>
+    
+    <div style="text-align: center; margin-top: 40px;">
+        <a href="{{ url_for('about_page') }}" class="btn-secondary">Learn More About Us</a>
+    </div>
+</section>
+{% endblock %}

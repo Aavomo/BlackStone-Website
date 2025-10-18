@@ -1,0 +1,8 @@
+# Alternative requirements with no version constraints
+Flask
+Werkzeug
+Jinja2
+MarkupSafe
+itsdangerous
+click
+blinker

@@ -1,0 +1,82 @@
+{% extends "enhanced/base.html" %}
+
+{% block title %}Our Team - {{ settings.name }}{% endblock %}
+
+{% block content %}
+<section class="hero-section">
+    <div class="hero-content">
+        <h1 class="hero-title">Our Expert Team</h1>
+        <p class="hero-subtitle">Meet the investment professionals driving your success</p>
+    </div>
+</section>
+
+<section class="section">
+    <div class="container">
+        <div class="section-header">
+            <h2>Leadership & Investment Professionals</h2>
+            <p>Our diverse team brings decades of combined experience in private equity, investment banking, and strategic consulting.</p>
+        </div>
+        
+        <div class="team-grid">
+            <div class="team-card glass">
+                <div class="team-image">
+                    <img src="{{ url_for('static', filename='images/team/ceo.jpg') }}" alt="CEO" loading="lazy">
+                </div>
+                <div class="team-info">
+                    <h3>Teresa Isabel Nnang Avomo</h3>
+                    <p class="team-role">Directora General</p>
+                    <p class="team-bio">Visionary leader with extensive experience in the oil and energy sector. As the first female Managing Director of GEPetrol, Teresa brings over 10 years of engineering expertise and strategic leadership in STEAM industries to drive Blackstone EG's investment initiatives.</p>
+                    <div class="team-social">
+                        <a href="#" class="social-link"><i class="fab fa-linkedin"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="team-card glass">
+                <div class="team-image">
+                    <img src="{{ url_for('static', filename='images/team/cio.jpg') }}" alt="CIO" loading="lazy">
+                </div>
+                <div class="team-info">
+                    <h3>Dionisia Alogo</h3>
+                    <p class="team-role">Encargada de Captación Comercial y Legal</p>
+                    <p class="team-bio">Founder of ALOGO LAW FIRM, specializing in corporate law and business development. Expert in international legal standards with deep understanding of commercial frameworks that drive competitive business environments in Equatorial Guinea.</p>
+        </div>
+                    <div class="team-social">
+                        <a href="#" class="social-link"><i class="fab fa-linkedin"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="team-card glass">
+                <div class="team-image">
+                    <img src="{{ url_for('static', filename='images/team/cfo.jpg') }}" alt="CFO" loading="lazy">
+                </div>
+                <div class="team-info">
+                    <h3>Catalina Esono Abomo </h3>
+                    <p class="team-role">Encargada de Redes Sociales y Medios Digitales</p>
+                    <p class="team-bio">Digital marketing strategist and social media expert. Manages Blackstone EG's digital presence, investor communications, and multimedia content strategy to enhance market visibility and stakeholder engagement across digital platforms.</p>
+                    <div class="team-social">
+                        <a href="#" class="social-link"><i class="fab fa-linkedin"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+</section>
+
+
+
+<section class="section">
+    <div class="container">
+        <div class="cta-section glass">
+            <h2>Ready to Work With Our Team?</h2>
+            <p>Connect with our investment professionals to discuss your opportunities.</p>
+            <a href="{{ url_for('contact_page') }}" class="btn btn-primary">Get In Touch</a>
+        </div>
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,137 @@
+{% extends "enhanced/base.html" %}
+
+{% block title %}Portfolio - {{ company_settings.company_name }}{% endblock %}
+{% block description %}Explore our successful investment facilitation projects across Africa. See how {{ company_settings.company_name }} delivers results for investors.{% endblock %}
+
+{% block content %}
+<!-- Page Header -->
+<section class="page-header">
+    <div class="page-header-content scroll-reveal">
+        <h1>Our Portfolio</h1>
+        <p>Showcasing successful investment facilitation projects that drive growth and create value across Africa.</p>
+    </div>
+</section>
+
+<!-- Portfolio Filters -->
+<section class="portfolio-filters-section">
+    <div class="portfolio-filters scroll-reveal">
+        <button class="filter-btn {{ 'active' if active_category == 'all' else '' }}" data-filter="all">
+            <a href="{{ url_for('portfolio_page', category='all') }}">All Projects</a>
+        </button>
+        {% for category in categories %}
+        <button class="filter-btn {{ 'active' if active_category == category else '' }}" data-filter="{{ category }}">
+            <a href="{{ url_for('portfolio_page', category=category) }}">{{ category }}</a>
+        </button>
+        {% endfor %}
+    </div>
+</section>
+
+<!-- Portfolio Grid -->
+<section class="section">
+    <div class="portfolio-container">
+        {% if projects %}
+            <div class="portfolio-grid">
+                {% for project in projects %}
+                <div class="portfolio-card scroll-reveal" data-category="{{ project.category }}">
+                    {% if project.featured_image %}
+                        <div class="portfolio-image">
+                            <img src="{{ url_for('static', filename=project.featured_image) }}" alt="{{ project.title }}">
+                            <div class="portfolio-overlay">
+                                <a href="{{ url_for('portfolio_detail', project_id=project.id) }}" class="portfolio-view-btn">
+                                    View Details
+                                </a>
+                            </div>
+                        </div>
+                    {% else %}
+                        <div class="portfolio-placeholder">
+                            <div class="portfolio-icon">
+                                {% if project.category == 'Infrastructure' %}🏗️
+                                {% elif project.category == 'Energy' %}⚡
+                                {% elif project.category == 'Real Estate' %}🏢
+                                {% elif project.category == 'Manufacturing' %}🏭
+                                {% else %}💼{% endif %}
+                            </div>
+                            <p>{{ project.category }}</p>
+                        </div>
+                    {% endif %}
+                    
+                    <div class="portfolio-content">
+                        <div class="portfolio-category">{{ project.category }}</div>
+                        <h3><a href="{{ url_for('portfolio_detail', project_id=project.id) }}">{{ project.title }}</a></h3>
+                        <p class="portfolio-description">{{ project.description[:120] }}...</p>
+                        
+                        <div class="portfolio-meta">
+                            {% if project.value %}
+                                <div class="portfolio-value">
+                                    <strong>💰 {{ project.value }}</strong>
+                                </div>
+                            {% endif %}
+                            {% if project.location %}
+                                <div class="portfolio-location">
+                                    📍 {{ project.location }}
+                                </div>
+                            {% endif %}
+                            {% if project.completion_date %}
+                                <div class="portfolio-date">
+                                    📅 {{ project.completion_date.strftime('%Y') }}
+                                </div>
+                            {% endif %}
+                        </div>
+                        
+                        <div class="portfolio-status status-{{ project.status }}">
+                            {% if project.status == 'completed' %}✅
+                            {% elif project.status == 'ongoing' %}🔄
+                            {% else %}📅{% endif %}
+                            {{ project.status.title() }}
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="empty-state scroll-reveal">
+                <div class="empty-icon">💼</div>
+                <h2>No Projects Found</h2>
+                <p>{% if active_category != 'all' %}No projects found in the {{ active_category }} category.{% else %}We're building our portfolio. Check back soon for exciting projects!{% endif %}</p>
+                {% if active_category != 'all' %}
+                    <a href="{{ url_for('portfolio_page', category='all') }}" class="btn-secondary">View All Projects</a>
+                {% endif %}
+            </div>
+        {% endif %}
+    </div>
+</section>
+
+<!-- Portfolio Stats -->
+<section class="section portfolio-stats-section">
+    <div class="portfolio-stats scroll-reveal">
+        <div class="stat-item">
+            <div class="stat-number">{{ projects | length }}</div>
+            <div class="stat-label">Completed Projects</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-number">{{ categories | length }}</div>
+            <div class="stat-label">Industry Sectors</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-number">$2B+</div>
+            <div class="stat-label">Capital Facilitated</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-number">100%</div>
+            <div class="stat-label">Success Rate</div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA Section -->
+<section class="section cta-section">
+    <div class="cta-container scroll-reveal">
+        <h2>Ready to Start Your Next Project?</h2>
+        <p>Let us help you identify and facilitate your next investment opportunity in Africa.</p>
+        <div class="cta-buttons">
+            <a href="{{ url_for('contact_page') }}" class="btn-primary">Discuss Your Project</a>
+            <a href="{{ url_for('services_page') }}" class="btn-secondary">Our Services</a>
+        </div>
+    </div>
+</section>
+{% endblock %}

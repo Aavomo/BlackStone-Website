@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block title %}Page Not Found - Blackstone EG & Partners{% endblock %}
+
+{% block content %}
+<section class="section" style="text-align: center; padding: 150px 5%;">
+    <div style="max-width: 600px; margin: 0 auto;">
+        <h1 style="font-size: 6rem; font-weight: 900; color: var(--primary-gold); margin-bottom: 20px;">404</h1>
+        <h2 style="font-size: 2rem; font-weight: 600; margin-bottom: 20px; color: white;">Page Not Found</h2>
+        <p style="color: rgba(255, 255, 255, 0.7); font-size: 1.2rem; margin-bottom: 40px;">The page you're looking for doesn't exist or has been moved.</p>
+        <a href="{{ url_for('home') }}" class="btn-primary">Return Home</a>
+    </div>
+</section>
+{% endblock %}

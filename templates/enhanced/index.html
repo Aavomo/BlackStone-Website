@@ -1,0 +1,177 @@
+{% extends "enhanced/base.html" %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero" id="home">
+    <div class="floating-elements">
+        <div class="floating-element"></div>
+        <div class="floating-element"></div>
+        <div class="floating-element"></div>
+        <div class="floating-element"></div>
+    </div>
+    <div class="hero-content scroll-reveal">
+        <h1>{{ company_settings.company_name }}</h1>
+        <p class="hero-subtitle">{{ company_settings.tagline }}</p>
+        <div class="hero-buttons">
+            <a href="{{ url_for('contact_page') }}" class="btn-primary" onclick="gtag('event', 'click', {'event_category': 'CTA', 'event_label': 'Hero Explore'});">Explore Opportunities</a>
+            <a href="{{ url_for('services_page') }}" class="btn-secondary">Our Services</a>
+        </div>
+    </div>
+    <div class="hero-scroll-indicator">
+        <div class="scroll-arrow"></div>
+    </div>
+</section>
+
+
+
+<!-- Services Preview Section -->
+<section class="section services-preview">
+    <div class="section-header scroll-reveal">
+        <h2>Our Core Services</h2>
+        <p>Providing end-to-end support for sophisticated investors seeking premier opportunities in African markets.</p>
+    </div>
+    
+    <div class="services-grid">
+        {% for service in services %}
+        <div class="service-card scroll-reveal" style="animation-delay: {{ loop.index0 * 0.1 }}s">
+            <div class="service-icon">
+                {% if loop.index == 1 %}🎯
+                {% elif loop.index == 2 %}🏛️
+                {% elif loop.index == 3 %}🌱
+                {% else %}🛎️{% endif %}
+            </div>
+            <h3>{{ service.title }}</h3>
+            <p>{{ service.subtitle }}</p>
+            <a href="{{ url_for('services_page') }}" class="service-link">Learn More →</a>
+        </div>
+        {% endfor %}
+    </div>
+    
+    <div class="text-center scroll-reveal" style="margin-top: 50px;">
+        <a href="{{ url_for('services_page') }}" class="btn-primary">View All Services</a>
+    </div>
+</section>
+
+<!-- Portfolio Preview -->
+{% if featured_portfolio %}
+<section class="section portfolio-preview">
+    <div class="section-header scroll-reveal">
+        <h2>Featured Portfolio</h2>
+        <p>Showcase of our successful investment facilitation projects across Africa.</p>
+    </div>
+    
+    <div class="portfolio-grid">
+        {% for project in featured_portfolio %}
+        <div class="portfolio-card scroll-reveal">
+            {% if project.featured_image %}
+                <img src="{{ url_for('static', filename=project.featured_image) }}" alt="{{ project.title }}">
+            {% else %}
+                <div class="portfolio-placeholder">{{ project.category }}</div>
+            {% endif %}
+            <div class="portfolio-content">
+                <div class="portfolio-category">{{ project.category }}</div>
+                <h3>{{ project.title }}</h3>
+                <p>{{ project.description[:120] }}...</p>
+                <div class="portfolio-meta">
+                    <span class="portfolio-value">{{ project.value }}</span>
+                    <span class="portfolio-location">{{ project.location }}</span>
+                </div>
+                <a href="{{ url_for('portfolio_detail', project_id=project.id) }}" class="portfolio-link">View Details</a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    
+    <div class="text-center scroll-reveal" style="margin-top: 50px;">
+        <a href="{{ url_for('portfolio_page') }}" class="btn-secondary">View Full Portfolio</a>
+    </div>
+</section>
+{% endif %}
+
+<!-- Blog Preview -->
+{% if recent_posts %}
+<section class="section blog-preview">
+    <div class="section-header scroll-reveal">
+        <h2>Latest Insights</h2>
+        <p>Stay informed with our latest market analysis and investment insights.</p>
+    </div>
+    
+    <div class="blog-grid">
+        {% for post in recent_posts %}
+        <article class="blog-card scroll-reveal">
+            {% if post.featured_image %}
+                <img src="{{ url_for('static', filename=post.featured_image) }}" alt="{{ post.title }}">
+            {% else %}
+                <div class="blog-placeholder">📰</div>
+            {% endif %}
+            <div class="blog-content">
+                <div class="blog-meta">
+                    <span class="blog-author">{{ post.author }}</span>
+                    <span class="blog-date">{{ post.created_at.strftime('%B %d, %Y') }}</span>
+                </div>
+                <h3><a href="{{ url_for('blog_post', slug=post.slug) }}">{{ post.title }}</a></h3>
+                <p>{{ post.excerpt }}</p>
+                <a href="{{ url_for('blog_post', slug=post.slug) }}" class="blog-link">Read More →</a>
+            </div>
+        </article>
+        {% endfor %}
+    </div>
+    
+    <div class="text-center scroll-reveal" style="margin-top: 50px;">
+        <a href="{{ url_for('blog_page') }}" class="btn-secondary">View All Posts</a>
+    </div>
+</section>
+{% endif %}
+
+<!-- CTA Section -->
+<section class="section cta-section">
+    <div class="cta-container scroll-reveal">
+        <h2>Ready to Invest in Africa's Future?</h2>
+        <p>Connect with our investment specialists for exclusive opportunities and personalized market insights.</p>
+        <div class="cta-buttons">
+            <a href="{{ url_for('contact_page') }}" class="btn-primary" onclick="gtag('event', 'click', {'event_category': 'CTA', 'event_label': 'Bottom CTA'});">Schedule Consultation</a>
+            <a href="{{ url_for('portfolio_page') }}" class="btn-secondary">View Our Work</a>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    // Counter animation for stats
+    function animateCounters() {
+        const counters = document.querySelectorAll('.stat-number');
+        counters.forEach(counter => {
+            const target = parseInt(counter.getAttribute('data-count'));
+            const duration = 2000;
+            const step = target / (duration / 16);
+            let current = 0;
+            
+            const timer = setInterval(() => {
+                current += step;
+                if (current >= target) {
+                    counter.textContent = target;
+                    clearInterval(timer);
+                } else {
+                    counter.textContent = Math.floor(current);
+                }
+            }, 16);
+        });
+    }
+    
+    // Trigger counter animation when stats section is visible
+    const statsSection = document.querySelector('.stats-section');
+    if (statsSection) {
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    animateCounters();
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.5 });
+        
+        observer.observe(statsSection);
+    }
+</script>
+{% endblock %}

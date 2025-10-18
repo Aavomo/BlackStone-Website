@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block title %}Team - Blackstone EG & Partners{% endblock %}
+
+{% block content %}
+<!-- Page Header -->
+<section class="hero" style="height: 60vh; background: linear-gradient(rgba(10, 14, 26, 0.8), rgba(10, 14, 26, 0.8)), url('https://images.unsplash.com/photo-1521737604893-d14cc237f11d?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80') center/cover;">
+    <div class="hero-content">
+        <h1 style="font-size: 3.5rem;">Meet Our Executive Team</h1>
+        <p class="hero-subtitle">Industry leaders with deep expertise in African markets and international investment facilitation</p>
+    </div>
+</section>
+
+<!-- Team Section -->
+<section class="section">
+    <div class="team-grid">
+        {% for member in team_members %}
+        <div class="team-member">
+            <div class="member-name">{{ member.name }}</div>
+            <div class="member-title">{{ member.title }}</div>
+            <div class="member-bio">{{ member.bio }}</div>
+        </div>
+        {% endfor %}
+    </div>
+    
+    <div style="background: var(--glass-bg); backdrop-filter: blur(20px); border: 1px solid var(--glass-border); border-radius: 20px; padding: 40px; text-align: center; margin-top: 60px; max-width: 800px; margin-left: auto; margin-right: auto;">
+        <h3 style="color: var(--primary-gold); margin-bottom: 15px; font-size: 1.5rem;">Our Extended Network</h3>
+        <p style="color: rgba(255, 255, 255, 0.8); line-height: 1.6; font-size: 1.1rem;">
+            <strong>Todos los socios y empleados – Agentes Comerciales:</strong> Every partner and employee serves as a commercial agent, leveraging their expertise and networks to identify and facilitate investment opportunities across multiple sectors and markets.
+        </p>
+    </div>
+</section>
+{% endblock %}

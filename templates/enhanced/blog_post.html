@@ -1,0 +1,109 @@
+{% extends "enhanced/base.html" %}
+
+{% block title %}{{ post.title }} - {{ company_settings.company_name }}{% endblock %}
+{% block description %}{{ post.excerpt or (post.content[:150] + '...') }}{% endblock %}
+{% block og_title %}{{ post.title }}{% endblock %}
+{% block og_description %}{{ post.excerpt or (post.content[:150] + '...') }}{% endblock %}
+{% if post.featured_image %}
+{% block og_image %}{{ url_for('static', filename=post.featured_image, _external=True) }}{% endblock %}
+{% endif %}
+
+{% block content %}
+<!-- Article Header -->
+<article class="blog-post">
+    <header class="post-header">
+        <div class="post-header-content scroll-reveal">
+            <div class="post-meta">
+                <span class="post-author">👤 {{ post.author }}</span>
+                <span class="post-date">📅 {{ post.created_at.strftime('%B %d, %Y') }}</span>
+                <span class="post-reading-time">🕒 {{ (post.content|length / 1000 * 2)|round|int }} min read</span>
+            </div>
+            <h1>{{ post.title }}</h1>
+            {% if post.excerpt %}
+            <p style="font-size: 1.3rem; color: rgba(255,255,255,0.8); max-width: 600px; margin: 1rem auto 0; line-height: 1.6;">{{ post.excerpt }}</p>
+            {% endif %}
+            {% if post.tags %}
+                <div class="post-tags">
+                    {% for tag in post.tags.split(',') %}
+                        <span class="post-tag">{{ tag.strip() }}</span>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
+        
+        {% if post.featured_image %}
+        <div class="post-featured-image scroll-reveal">
+            <img src="{{ url_for('static', filename=post.featured_image) }}" alt="{{ post.title }}">
+        </div>
+        {% endif %}
+    </header>
+    
+    <!-- Article Content -->
+    <section class="section">
+        <div class="post-container">
+            <div class="post-content scroll-reveal">
+                {{ post.content | safe }}
+            </div>
+            
+            <!-- Share Buttons -->
+            <div class="post-share scroll-reveal">
+                <h4>📢 Share this article</h4>
+                <div class="share-buttons">
+                    <a href="https://twitter.com/intent/tweet?text={{ post.title }}&url={{ request.url }}" target="_blank" class="share-btn twitter">🐦 Twitter</a>
+                    <a href="https://www.linkedin.com/sharing/share-offsite/?url={{ request.url }}" target="_blank" class="share-btn linkedin">💼 LinkedIn</a>
+                    <a href="https://www.facebook.com/sharer/sharer.php?u={{ request.url }}" target="_blank" class="share-btn facebook">📘 Facebook</a>
+                    <a href="mailto:?subject={{ post.title }}&body=Check out this article: {{ request.url }}" class="share-btn email">📧 Email</a>
+                </div>
+            </div>
+        </div>
+    </section>
+</article>
+
+<!-- Related Posts -->
+{% if related_posts %}
+<section class="section related-posts">
+    <div class="container">
+        <div class="section-header scroll-reveal">
+            <h2>📰 Related Articles</h2>
+            <p>Continue reading with these related insights and analysis.</p>
+        </div>
+        
+        <div class="related-posts-grid">
+            {% for related_post in related_posts %}
+            <article class="related-post-card scroll-reveal">
+                {% if related_post.featured_image %}
+                    <img src="{{ url_for('static', filename=related_post.featured_image) }}" alt="{{ related_post.title }}">
+                {% else %}
+                    <div class="related-post-placeholder">📰</div>
+                {% endif %}
+                
+                <div class="related-post-content">
+                    <div class="related-post-meta">
+                        📅 {{ related_post.created_at.strftime('%B %d, %Y') }}
+                    </div>
+                    <h3><a href="{{ url_for('blog_post', slug=related_post.slug) }}">{{ related_post.title }}</a></h3>
+                    <p>{{ related_post.excerpt or (related_post.content[:100] + '...') }}</p>
+                </div>
+            </article>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endif %}
+
+<!-- CTA Section -->
+<section class="section cta-section">
+    <div class="cta-container scroll-reveal">
+        <h2>🚀 Ready to Explore Investment Opportunities?</h2>
+        <p>Contact our specialists to discuss how these insights can benefit your investment strategy in Equatorial Guinea.</p>
+        <a href="{{ url_for('contact_page') }}" class="btn-primary">Schedule Consultation</a>
+    </div>
+</section>
+
+<!-- Back to Blog Button -->
+<div style="text-align: center; padding: 2rem; background: var(--dark-navy);">
+    <a href="{{ url_for('blog_page') }}" class="btn" style="background: var(--glass-bg); border: 1px solid var(--glass-border); color: var(--primary-gold); padding: 1rem 2rem; border-radius: 25px; text-decoration: none; transition: all 0.3s ease;">
+        ← Back to All Articles
+    </a>
+</div>
+{% endblock %}

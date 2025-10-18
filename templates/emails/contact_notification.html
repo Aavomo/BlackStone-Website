@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <style>
+        body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
+        .header { background: #C9A961; color: white; padding: 20px; text-align: center; }
+        .content { padding: 20px; }
+        .footer { background: #f4f4f4; padding: 15px; text-align: center; font-size: 0.9rem; color: #666; }
+        .highlight { background: #f8f9fa; padding: 15px; border-left: 4px solid #C9A961; margin: 20px 0; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>📨 New Contact Form Submission</h1>
+        <p>Blackstone EG & Partners</p>
+    </div>
+    
+    <div class="content">
+        <p>You have received a new contact form submission:</p>
+        
+        <div class="highlight">
+            <h3>Contact Details:</h3>
+            <p><strong>Name:</strong> {{ submission.name }}</p>
+            <p><strong>Email:</strong> {{ submission.email }}</p>
+            <p><strong>Phone:</strong> {{ submission.phone or 'Not provided' }}</p>
+            <p><strong>Investment Interest:</strong> {{ submission.service }}</p>
+            <p><strong>Submitted:</strong> {{ submission.created_at.strftime('%B %d, %Y at %I:%M %p') }}</p>
+        </div>
+        
+        <h3>Message:</h3>
+        <p>{{ submission.message }}</p>
+        
+        <p><strong>Next Steps:</strong></p>
+        <ul>
+            <li>Review the submission in the admin panel</li>
+            <li>Contact the prospect within 24 hours</li>
+            <li>Update the status once contacted</li>
+        </ul>
+    </div>
+    
+    <div class="footer">
+        <p>This is an automated notification from your website contact form.</p>
+    </div>
+</body>
+</html>

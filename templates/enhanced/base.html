@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- SEO Meta Tags -->
+    <title>{% block title %}{{ company_settings.company_name }} - Elite Investment Gateway{% endblock %}</title>
+    <meta name="description" content="{% block description %}{{ company_settings.tagline }}. Premier investment facilitation services in Equatorial Guinea and Africa.{% endblock %}">
+    <meta name="keywords" content="{% block keywords %}investment, equatorial guinea, africa, business development, government relations, ESG{% endblock %}">
+    <meta name="author" content="{{ company_settings.company_name }}">
+    
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="{% block og_title %}{{ company_settings.company_name }}{% endblock %}">
+    <meta property="og:description" content="{% block og_description %}{{ company_settings.tagline }}{% endblock %}">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="{{ request.url }}">
+    <meta property="og:image" content="{% block og_image %}{{ url_for('static', filename='images/og-default.jpg', _external=True) }}{% endblock %}">
+    
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{% block twitter_title %}{{ company_settings.company_name }}{% endblock %}">
+    <meta name="twitter:description" content="{% block twitter_description %}{{ company_settings.tagline }}{% endblock %}">
+    <meta name="twitter:image" content="{% block twitter_image %}{{ url_for('static', filename='images/og-default.jpg', _external=True) }}{% endblock %}">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='favicon.ico') }}">
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ url_for('static', filename='apple-touch-icon.png') }}">
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/enhanced_style.css') }}">
+    {% block extra_css %}{% endblock %}
+    
+    <!-- Google Analytics -->
+    {% if google_analytics_id %}
+    <script async src="https://www.googletagmanager.com/gtag/js?id={{ google_analytics_id }}"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', '{{ google_analytics_id }}');
+    </script>
+    {% endif %}
+    
+    <!-- Facebook Pixel -->
+    {% if facebook_pixel_id %}
+    <script>
+        !function(f,b,e,v,n,t,s)
+        {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+        n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+        if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+        n.queue=[];t=b.createElement(e);t.async=!0;
+        t.src=v;s=b.getElementsByTagName(e)[0];
+        s.parentNode.insertBefore(t,s)}(window, document,'script',
+        'https://connect.facebook.net/en_US/fbevents.js');
+        fbq('init', '{{ facebook_pixel_id }}');
+        fbq('track', 'PageView');
+    </script>
+    <noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id={{ facebook_pixel_id }}&ev=PageView&noscript=1"/></noscript>
+    {% endif %}
+    
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "{{ company_settings.company_name }}",
+        "description": "{{ company_settings.tagline }}",
+        "url": "{{ request.url_root }}",
+        "logo": "{% if company_settings.logo_path %}{{ url_for('static', filename=company_settings.logo_path, _external=True) }}{% endif %}",
+        "contactPoint": {
+            "@type": "ContactPoint",
+            "telephone": "{{ company_settings.phone }}",
+            "contactType": "customer service",
+            "email": "{{ company_settings.email }}"
+        },
+        "address": {
+            "@type": "PostalAddress",
+            "addressLocality": "{{ company_settings.address }}"
+        }
+    }
+    </script>
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div id="loading-screen" class="loading-screen">
+        <div class="loading-spinner"></div>
+        <div class="loading-text">{{ company_settings.company_name }}</div>
+    </div>
+
+    <!-- Animated Background -->
+    <div class="animated-bg"></div>
+
+    <!-- Header -->
+    <header class="header" id="header">
+        <a href="{{ url_for('home') }}" class="logo-container">
+            <img src="{{ url_for('static', filename='uploads/logo.jpg') }}" alt="Logo" class="logo-image" style="height: 50px; mix-blend-mode: screen; filter: brightness(1.2);">
+        </a>
+        
+        <nav class="nav" id="nav">
+            <a href="{{ url_for('home') }}" class="{{ 'active' if request.endpoint == 'home' else '' }}">Home</a>
+            <a href="{{ url_for('services_page') }}" class="{{ 'active' if request.endpoint == 'services_page' else '' }}">Services</a>
+            <a href="{{ url_for('portfolio_page') }}" class="{{ 'active' if request.endpoint == 'portfolio_page' else '' }}">Portfolio</a>
+            <a href="{{ url_for('team_page') }}" class="{{ 'active' if request.endpoint == 'team_page' else '' }}">Team</a>
+            <a href="{{ url_for('blog_page') }}" class="{{ 'active' if request.endpoint == 'blog_page' else '' }}">Blog</a>
+            <a href="{{ url_for('about_page') }}" class="{{ 'active' if request.endpoint == 'about_page' else '' }}">About</a>
+            <a href="{{ url_for('contact_page') }}" class="{{ 'active' if request.endpoint == 'contact_page' else '' }}">Contact</a>
+        </nav>
+        
+        <div class="mobile-menu-toggle" id="mobile-menu-toggle">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-brand">
+                <div class="footer-logo">
+                    <img src="{{ url_for('static', filename='uploads/logo.jpg') }}" alt="Logo" class="footer-logo-image" style="mix-blend-mode: screen; filter: brightness(1.2);">
+                </div>
+                <p class="footer-description">{{ company_settings.tagline }}</p>
+                <div class="footer-social">
+                    <a href="#" class="social-link" aria-label="LinkedIn">💼</a>
+                    <a href="#" class="social-link" aria-label="Twitter">🐦</a>
+                    <a href="#" class="social-link" aria-label="Facebook">📘</a>
+                </div>
+            </div>
+            
+            <div class="footer-section">
+                <h4>Services</h4>
+                <a href="{{ url_for('services_page') }}">Market Access</a>
+                <a href="{{ url_for('services_page') }}">Government Relations</a>
+                <a href="{{ url_for('services_page') }}">ESG Excellence</a>
+                <a href="{{ url_for('services_page') }}">Concierge Services</a>
+            </div>
+            
+            <div class="footer-section">
+                <h4>Company</h4>
+                <a href="{{ url_for('about_page') }}">About Us</a>
+                <a href="{{ url_for('portfolio_page') }}">Portfolio</a>
+                <a href="{{ url_for('blog_page') }}">Blog</a>
+                <a href="{{ url_for('contact_page') }}">Contact</a>
+            </div>
+            
+            <div class="footer-section">
+                <h4>Contact Info</h4>
+                <p>📧 {{ company_settings.email }}</p>
+                <p>📞 {{ company_settings.phone }}</p>
+                <p>📍 {{ company_settings.address }}</p>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p>&copy; 2025 {{ company_settings.company_name }}. All rights reserved. | Empowering African Investment Excellence</p>
+        </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <button id="back-to-top" class="back-to-top" aria-label="Back to top">
+        ↑
+    </button>
+
+    <!-- Scripts -->
+    <script src="{{ url_for('static', filename='js/enhanced_main.js') }}"></script>
+    {% block extra_js %}{% endblock %}
+</body>
+</html>

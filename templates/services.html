@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{% block title %}Services - Blackstone EG & Partners{% endblock %}
+
+{% block content %}
+<!-- Page Header -->
+<section class="hero" style="height: 60vh; background: linear-gradient(rgba(10, 14, 26, 0.8), rgba(10, 14, 26, 0.8)), url('https://images.unsplash.com/photo-1521737604893-d14cc237f11d?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80') center/cover;">
+    <div class="hero-content">
+        <h1 style="font-size: 3.5rem;">Our Services</h1>
+        <p class="hero-subtitle">Providing end-to-end support for sophisticated investors seeking premier opportunities in African markets. We are your strategic partner for growth, compliance, and success.</p>
+    </div>
+</section>
+
+<!-- Services Section -->
+<section class="section">
+    {% for service in services %}
+    <div style="max-width: 1100px; margin: 0 auto 100px; display: grid; grid-template-columns: {% if loop.index % 2 == 0 %}1.2fr 1fr{% else %}1fr 1.2fr{% endif %}; gap: 60px; align-items: center;">
+        {% if loop.index % 2 == 0 %}
+        <div>
+            <img src="{{ service.image }}" alt="{{ service.title }}" style="width: 100%; height: 400px; object-fit: cover; border-radius: 20px; box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);">
+        </div>
+        {% endif %}
+        
+        <div>
+            <h2 style="font-size: 2.5rem; font-weight: 600; margin-bottom: 25px; color: var(--primary-gold);">{{ service.title }}</h2>
+            <p style="font-size: 1.2rem; font-weight: 500; color: rgba(255, 255, 255, 0.8); margin-bottom: 25px; line-height: 1.6;">{{ service.subtitle }}</p>
+            <ul style="list-style: none; padding-left: 0;">
+                {% for feature in service.features %}
+                <li style="position: relative; padding-left: 30px; margin-bottom: 15px; color: rgba(255, 255, 255, 0.9); font-size: 1.05rem;">
+                    <span style="position: absolute; left: 0; top: 0; color: var(--primary-gold); font-weight: 700;">✓</span>
+                    {{ feature }}
+                </li>
+                {% endfor %}
+            </ul>
+            <a href="{{ url_for('contact_page') }}" class="btn-primary" style="margin-top: 20px;">Get Started</a>
+        </div>
+        
+        {% if loop.index % 2 == 1 %}
+        <div>
+            <img src="{{ service.image }}" alt="{{ service.title }}" style="width: 100%; height: 400px; object-fit: cover; border-radius: 20px; box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);">
+        </div>
+        {% endif %}
+    </div>
+    {% endfor %}
+</section>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+@media (max-width: 992px) {
+    .section > div {
+        grid-template-columns: 1fr !important;
+        gap: 40px !important;
+    }
+}
+</style>
+{% endblock %}

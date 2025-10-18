@@ -1,0 +1,175 @@
+{% extends "enhanced/base.html" %}
+
+{% block title %}Page Not Found - {{ company_settings.company_name }}{% endblock %}
+
+{% block content %}
+<section class="section error-section">
+    <div class="error-container">
+        <div class="error-content scroll-reveal">
+            <div class="error-number">404</div>
+            <h1>Page Not Found</h1>
+            <p>The page you're looking for doesn't exist or has been moved. Let us help you find what you're looking for.</p>
+            
+            <div class="error-actions">
+                <a href="{{ url_for('home') }}" class="btn-primary">Return Home</a>
+                <a href="{{ url_for('contact_page') }}" class="btn-secondary">Contact Us</a>
+            </div>
+            
+            <div class="error-suggestions">
+                <h3>You might be looking for:</h3>
+                <div class="suggestion-links">
+                    <a href="{{ url_for('services_page') }}" class="suggestion-link">
+                        <span class="suggestion-icon">🎯</span>
+                        <span>Our Services</span>
+                    </a>
+                    <a href="{{ url_for('portfolio_page') }}" class="suggestion-link">
+                        <span class="suggestion-icon">💼</span>
+                        <span>Portfolio</span>
+                    </a>
+                    <a href="{{ url_for('blog_page') }}" class="suggestion-link">
+                        <span class="suggestion-icon">📝</span>
+                        <span>Blog & Insights</span>
+                    </a>
+                    <a href="{{ url_for('about_page') }}" class="suggestion-link">
+                        <span class="suggestion-icon">🏢</span>
+                        <span>About Us</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+.error-section {
+    min-height: 70vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 100px 5%;
+}
+
+.error-container {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.error-number {
+    font-size: 8rem;
+    font-weight: 900;
+    color: var(--primary-gold);
+    margin-bottom: 20px;
+    text-shadow: 0 0 30px rgba(201, 169, 97, 0.3);
+    animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.8; }
+}
+
+.error-content h1 {
+    font-size: 2.5rem;
+    font-weight: 600;
+    margin-bottom: 20px;
+    color: white;
+}
+
+.error-content p {
+    font-size: 1.2rem;
+    color: rgba(255, 255, 255, 0.7);
+    margin-bottom: 40px;
+    line-height: 1.6;
+}
+
+.error-actions {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 50px;
+}
+
+.error-suggestions {
+    background: var(--glass-bg);
+    backdrop-filter: blur(20px);
+    border: 1px solid var(--glass-border);
+    border-radius: 20px;
+    padding: 30px;
+    text-align: left;
+}
+
+.error-suggestions h3 {
+    color: var(--primary-gold);
+    margin-bottom: 20px;
+    text-align: center;
+    font-size: 1.3rem;
+}
+
+.suggestion-links {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 15px;
+}
+
+.suggestion-link {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px 15px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+    text-decoration: none;
+    color: rgba(255, 255, 255, 0.8);
+    transition: all 0.3s ease;
+}
+
+.suggestion-link:hover {
+    background: rgba(201, 169, 97, 0.1);
+    border-color: var(--primary-gold);
+    color: white;
+    transform: translateY(-3px);
+    text-decoration: none;
+}
+
+.suggestion-icon {
+    font-size: 2rem;
+    margin-bottom: 10px;
+    display: block;
+}
+
+.suggestion-link span:last-child {
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+@media (max-width: 768px) {
+    .error-number {
+        font-size: 6rem;
+    }
+    
+    .error-content h1 {
+        font-size: 2rem;
+    }
+    
+    .error-actions {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .suggestion-links {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 480px) {
+    .suggestion-links {
+        grid-template-columns: 1fr;
+    }
+}
+</style>
+{% endblock %}
