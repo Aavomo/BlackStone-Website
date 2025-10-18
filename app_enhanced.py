@@ -152,11 +152,34 @@ class SecureModelView(ModelView):
         return redirect(url_for('admin_login'))
 
 class ContactAdminView(SecureModelView):
-    column_list = ['name', 'email', 'service', 'status', 'created_at']
-    column_searchable_list = ['name', 'email']
+    column_list = ['name', 'email', 'service', 'message', 'status', 'created_at']
+    column_searchable_list = ['name', 'email', 'message']
     column_filters = ['service', 'status', 'created_at']
-    column_editable_list = ['status']
+    column_editable_list = ['status', 'notes']
     form_excluded_columns = ['created_at']
+    
+    # Enable details view with a clickable button
+    can_view_details = True
+    column_details_list = ['id', 'name', 'email', 'phone', 'service', 'message', 'status', 'notes', 'created_at']
+    
+    # Format the message column to show preview
+    def _message_formatter(view, context, model, name):
+        if model.message:
+            # Show first 50 characters with "..." if longer
+            preview = model.message[:50] + "..." if len(model.message) > 50 else model.message
+            return preview
+        return ""
+    
+    column_formatters = {
+        'message': _message_formatter
+    }
+    
+    # Make the message column searchable and readable
+    column_descriptions = {
+        'message': 'Click "View" button to read full message',
+        'status': 'new = unread, contacted = replied, closed = resolved',
+        'notes': 'Add internal notes about this contact'
+    }
 
 class BlogAdminView(SecureModelView):
     column_list = ['title', 'author', 'published', 'created_at']
