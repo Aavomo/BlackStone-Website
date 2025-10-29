@@ -147,10 +147,12 @@ body {
 }
 
 .hero-title {
-  margin-top: 150px !important;
-  margin-bottom: 30px;
+  position: relative;
+  left: 150px; /* pushes it 50px to the right */
+  margin-top: 70px !important;
+  margin-bottom: 8px;
   text-align: right;
-  font-size: 2.5rem;
+  font-size: 4.5rem;
   font-weight: 700;
   color: var(--primary-gold);
 }
