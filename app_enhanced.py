@@ -152,7 +152,7 @@ class SecureModelView(ModelView):
         return redirect(url_for('admin_login'))
 
 class ContactAdminView(SecureModelView):
-    column_list = ['name', 'email', 'service', 'message', 'status', 'created_at']
+    column_list = ['name', 'email', 'service', 'status', 'created_at']
     column_searchable_list = ['name', 'email', 'message']
     column_filters = ['service', 'status', 'created_at']
     column_editable_list = ['status', 'notes']
