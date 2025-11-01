@@ -241,7 +241,7 @@ class DashboardView(AdminIndexView):
                          recent_contacts=recent_contacts)
 
 # Initialize Admin
-admin = Admin(app, name='Blackstone EG Admin', index_view=DashboardView()
+admin = Admin(app, name='Blackstone EG Admin', index_view=DashboardView())
 admin.add_view(ContactAdminView(ContactSubmission, db.session, name='Contact Forms'))
 admin.add_view(BlogAdminView(BlogPost, db.session, name='Blog Posts'))
 admin.add_view(PortfolioAdminView(PortfolioItem, db.session, name='Portfolio'))
