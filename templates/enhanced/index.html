@@ -34,7 +34,12 @@
     <div class="services-grid">
         {% for service in services %}
         <div class="service-card scroll-reveal" style="animation-delay: {{ loop.index0 * 0.1 }}s">
-            
+            <div class="service-icon">
+                {% if loop.index == 1 %}🎯
+                {% elif loop.index == 2 %}🏛️
+                {% elif loop.index == 3 %}🌱
+                {% else %}🛎️{% endif %}
+            </div>
             <h3>{{ service.title }}</h3>
             <p>{{ service.subtitle }}</p>
             <a href="{{ url_for('services_page') }}" class="service-link">Learn More →</a>
