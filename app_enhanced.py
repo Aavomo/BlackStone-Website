@@ -153,10 +153,14 @@ class SecureModelView(ModelView):
 
 class ContactAdminView(SecureModelView):
     column_list = ['name', 'email', 'service', 'status', 'created_at']
-    column_searchable_list = ['name', 'email']
+    column_searchable_list = ['name', 'email', 'message']
     column_filters = ['service', 'status', 'created_at']
-    column_editable_list = ['status']
+    column_editable_list = ['status', 'notes']
     form_excluded_columns = ['created_at']
+    
+    # Enable details view with a clickable button
+    can_view_details = True
+    column_details_list = ['id', 'name', 'email', 'phone', 'service', 'message', 'status', 'notes', 'created_at']
 
 class BlogAdminView(SecureModelView):
     column_list = ['title', 'author', 'published', 'created_at']
@@ -218,7 +222,7 @@ class DashboardView(AdminIndexView):
                          recent_contacts=recent_contacts)
 
 # Initialize Admin
-admin = Admin(app, name='Blackstone EG Admin', index_view=DashboardView(), template_mode='bootstrap4')
+admin = Admin(app, name='Blackstone EG Admin', index_view=DashboardView())
 admin.add_view(ContactAdminView(ContactSubmission, db.session, name='Contact Forms'))
 admin.add_view(BlogAdminView(BlogPost, db.session, name='Blog Posts'))
 admin.add_view(PortfolioAdminView(PortfolioItem, db.session, name='Portfolio'))
