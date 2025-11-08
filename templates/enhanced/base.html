@@ -84,7 +84,7 @@
     }
     </script>
 </head>
-<body>
+<body class="page-{{ request.endpoint|replace('_', '-') }}">
     <!-- Loading Screen -->
     <div id="loading-screen" class="loading-screen">
         <div class="loading-spinner"></div>

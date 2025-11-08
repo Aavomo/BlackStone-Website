@@ -285,12 +285,12 @@ body {
 
 .hero-subtitle {
   position: relative;
-  left: 150px; /* increase value to push farther right */
+  left: 0;
   font-size: 1.4rem;
   font-weight: 300;
   margin-bottom: 40px;
   color: rgba(255, 255, 255, 0.9);
-  text-align: right;
+  text-align: center;
 }
 
 
@@ -1490,7 +1490,11 @@ body {
 /* ===========================
    TEAM SECTION STYLES
    =========================== */
-
+body.page-team-page .hero-section .hero-subtitle {
+  left: 200px !important;
+  text-align: right !important;
+  position: relative !important;
+}
 .team-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -1634,6 +1638,16 @@ body {
 /* ===========================
    ABOUT SECTION STYLES
    =========================== */
+/* About page hero title - smaller font size */
+body.page-about-page .hero-title {
+  font-size: 3rem !important;
+} 
+
+body.page-about-page .hero-section .hero-subtitle {
+  left: 200px !important;
+  text-align: right !important;
+  position: relative !important;
+}
 
 .about-content {
   display: grid;
