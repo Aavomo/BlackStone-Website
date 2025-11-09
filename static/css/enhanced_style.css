@@ -904,6 +904,9 @@ body {
   margin-bottom: 15px;
 }
 
+
+
+
 .social-links {
   display: flex;
   justify-content: center;
@@ -1645,8 +1648,9 @@ body.page-about-page .hero-title {
 
 body.page-about-page .hero-section .hero-subtitle {
   left: 200px !important;
-  text-align: right !important;
+  text-align: center !important;
   position: relative !important;
+  margin-top: 60px !important;
 }
 
 .about-content {

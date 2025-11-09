@@ -101,7 +101,7 @@ class PortfolioItem(db.Model):
     completion_date = db.Column(db.Date)
     featured_image = db.Column(db.String(200))
     gallery_images = db.Column(db.Text)  # JSON string of image paths
-    status = db.Column(db.String(50), default='completed')  # completed, ongoing, planned
+    status = db.Column(db.String(50), default='Investment Opportunity')  # completed, ongoing, planned
     location = db.Column(db.String(100))
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
 
@@ -216,6 +216,19 @@ class PortfolioAdminView(SecureModelView):
     column_list = ['title', 'category', 'client', 'status', 'completion_date']
     column_searchable_list = ['title', 'description']
     column_filters = ['category', 'status', 'completion_date']
+    
+    # Add form choices for status dropdown
+    form_choices = {
+        'status': [
+            ('investment-opportunity', 'Investment Opportunity'),
+            ('ongoing', 'Ongoing'),
+            ('completed', 'Completed'),
+            ('planned', 'Planned')
+        ]
+    }
+    
+    # Make status editable inline
+    column_editable_list = ['status']
 
 class DashboardView(AdminIndexView):
     def is_accessible(self):
@@ -318,42 +331,7 @@ services = [
 ]
 
 team_members = [
-    {
-        'name': 'Teresa Nnang Avomo',
-        'title': 'Directora General',
-        'bio': 'Visionary leader with extensive experience in the oil and energy sector. As the first female Managing Director of GEPetrol, Teresa brings over 10 years of engineering expertise and strategic leadership in STEAM industries to drive Blackstone EG\'s consulting and facilitation initiatives.',
-        'image': 'teresa.jpg'
-    },
-    {
-        'name': 'Dionisia Alogo',
-        'title': 'Encargada de Captación Comercial y Legal',
-        'bio': 'Founder of ALOGO LAW FIRM, specializing in corporate law and business development. Expert in international legal standards with deep understanding of commercial frameworks that drive competitive business environments in Equatorial Guinea.',
-        'image': 'dionisia.jpg'
-    },
-    {
-        'name': 'Yvone Bekale',
-        'title': 'Encargado de Captación Internacional',
-        'bio': 'International business development specialist with expertise in cross-border investment facilitation. Leads strategic partnerships and investor relations across global markets, connecting international capital with African opportunities.',
-        'image': 'yvone-bekale.jpg'
-    },
-    {
-        'name': 'Rufino Esono',
-        'title': 'Encargado de Operaciones de Campo e Institucionales',
-        'bio': 'Operations and institutional relations expert with extensive field experience. Manages on-ground logistics, government liaisons, and ensures seamless execution of consulting projects while maintaining strong institutional partnerships.',
-        'image': 'rufino-esono.jpg'
-    },
-    {
-        'name': 'Catalina Esono Abomo',
-        'title': 'Encargada de Redes Sociales y Medios Digitales',
-        'bio': 'Digital marketing strategist and social media expert. Manages Blackstone EG\'s digital presence, investor communications, and multimedia content strategy to enhance market visibility and stakeholder engagement across digital platforms.',
-        'image': 'catalina-esono-abomo.jpg'
-    },
-    {
-        'name': 'Diana',
-        'title': 'Encargada de Relaciones Internacionales, Visibilidad e Imagen Corporativa',
-        'bio': 'International relations and corporate communications specialist. Oversees brand positioning, public relations, and corporate image management while building strategic relationships with international stakeholders and media partners.',
-        'image': 'diana.jpg'
-    }
+    
 ]
 
 # Routes
@@ -361,7 +339,8 @@ team_members = [
 def home():
     settings = get_company_settings()
     recent_posts = BlogPost.query.filter_by(published=True).order_by(BlogPost.created_at.desc()).limit(3).all()
-    featured_portfolio = PortfolioItem.query.filter_by(status='completed').limit(4).all()
+    featured_portfolio = PortfolioItem.query.filter(
+    PortfolioItem.status.in_(['investment-opportunity', 'completed'])).order_by(PortfolioItem.created_at.desc()).limit(4).all()
     return render_template('enhanced/index.html', 
                          services=services[:4], 
                          settings=settings,
@@ -447,9 +426,14 @@ def portfolio_page():
     category = request.args.get('category', 'all')
     
     if category == 'all':
-        projects = PortfolioItem.query.filter_by(status='completed').order_by(PortfolioItem.created_at.desc()).all()
+        projects = PortfolioItem.query.filter(
+            PortfolioItem.status.in_(['investment-opportunity', 'completed'])
+        ).order_by(PortfolioItem.created_at.desc()).all()
     else:
-        projects = PortfolioItem.query.filter_by(category=category, status='completed').order_by(PortfolioItem.created_at.desc()).all()
+        projects = PortfolioItem.query.filter(
+            PortfolioItem.category == category,
+            PortfolioItem.status.in_(['investment-opportunity', 'completed'])
+        ).order_by(PortfolioItem.created_at.desc()).all()
     
     categories = db.session.query(PortfolioItem.category).distinct().all()
     categories = [cat[0] for cat in categories]
@@ -556,63 +540,15 @@ def init_db():
             admin_user.set_password('YOUR_SECURE_PASSWORD_HERE')  # ⚠️ CHANGE THIS!
             db.session.add(admin_user)
         
-        # Create sample blog posts
-        if BlogPost.query.count() == 0:
-            sample_posts = [
-                {
-                    'title': 'Investment Opportunities in Equatorial Guinea 2025',
-                    'slug': 'investment-opportunities-equatorial-guinea-2025',
-                    'content': '''<p>Equatorial Guinea presents unprecedented investment opportunities in 2025...</p>''',
-                    'excerpt': 'Discover the latest investment opportunities in one of Africa\'s most promising markets.',
-                    'author': 'Teresa Nnang Avomo',
-                    'published': True,
-                    'tags': 'investment, africa, opportunities'
-                },
-                {
-                    'title': 'ESG Investing in African Markets',
-                    'slug': 'esg-investing-african-markets',
-                    'content': '''<p>Environmental, Social, and Governance investing is reshaping African markets...</p>''',
-                    'excerpt': 'How ESG principles are driving sustainable investment in Africa.',
-                    'author': 'Dionisia Alogo',
-                    'published': True,
-                    'tags': 'esg, sustainability, africa'
-                }
-            ]
-            
-            for post_data in sample_posts:
-                post = BlogPost(**post_data)
-                db.session.add(post)
+        # REMOVED: Sample blog posts block
+        # (No more hardcoded blogs—add via admin now!)
         
-        # Create sample portfolio items
-        if PortfolioItem.query.count() == 0:
-            sample_projects = [
-                {
-                    'title': 'Malabo Infrastructure Development',
-                    'description': 'Large-scale infrastructure development project in Malabo including roads, utilities, and commercial buildings.',
-                    'category': 'Infrastructure',
-                    'client': 'Government of Equatorial Guinea',
-                    'value': '$250M',
-                    'location': 'Malabo, Equatorial Guinea',
-                    'status': 'completed'
-                },
-                {
-                    'title': 'Renewable Energy Initiative',
-                    'description': 'Solar and wind energy projects across multiple locations in Equatorial Guinea.',
-                    'category': 'Energy',
-                    'client': 'Private Consortium',
-                    'value': '$180M',
-                    'location': 'Multiple Locations',
-                    'status': 'completed'
-                }
-            ]
-            
-            for project_data in sample_projects:
-                project = PortfolioItem(**project_data)
-                db.session.add(project)
+        # REMOVED: Sample portfolio items block (from previous edit)
         
         db.session.commit()
-        print("✅ Database initialized with sample data")
-        print("🔑 Admin login: username='admin', password='admin123'")
+        print("✅ Database initialized (no hardcoded samples)")
+        print("🔑 Admin login: username='admin', password='YOUR_SECURE_PASSWORD_HERE'")
+        print("💡 Tip: Add blog posts via /admin > Blog Posts for real content!")
 
 if __name__ == '__main__':
     init_db()
