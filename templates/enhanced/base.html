@@ -151,10 +151,17 @@
             
             <div class="footer-section">
                 <h4>Contact Info</h4>
-                <p>📧 {{ company_settings.email }}</p>
-                <p>☎ {{ company_settings.phone }}</p>
-                <p>📍 {{ company_settings.address }}</p>
+                <p style="display: flex; align-items: center; gap: 5px;">
+                    📧 {{ company_settings.email }}
+                </p>
+                <p style="display: flex; align-items: center; gap: 5px;">
+                    ☎ {{ company_settings.phone }}
+                </p>
+                <p style="display: flex; align-items: center; gap: 5px;">
+                    📍 {{ company_settings.address }}
+                </p>
             </div>
+
         </div>
         
         <div class="footer-bottom">
