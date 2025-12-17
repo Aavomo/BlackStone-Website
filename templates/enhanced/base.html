@@ -103,7 +103,7 @@
         <nav class="nav" id="nav">
             <a href="{{ url_for('home') }}" class="{{ 'active' if request.endpoint == 'home' else '' }}">Home</a>
             <a href="{{ url_for('services_page') }}" class="{{ 'active' if request.endpoint == 'services_page' else '' }}">Services</a>
-            <a href="{{ url_for('portfolio_page') }}" class="{{ 'active' if request.endpoint == 'portfolio_page' else '' }}">Portfolio</a>
+            <!-- <a href="{{ url_for('portfolio_page') }}" class="{{ 'active' if request.endpoint == 'portfolio_page' else '' }}">Portfolio</a> -->
             <a href="{{ url_for('team_page') }}" class="{{ 'active' if request.endpoint == 'team_page' else '' }}">Team</a>
             <a href="{{ url_for('blog_page') }}" class="{{ 'active' if request.endpoint == 'blog_page' else '' }}">Blog</a>
             <a href="{{ url_for('about_page') }}" class="{{ 'active' if request.endpoint == 'about_page' else '' }}">About</a>
@@ -144,7 +144,7 @@
             <div class="footer-section">
                 <h4>Company</h4>
                 <a href="{{ url_for('about_page') }}">About Us</a>
-                <a href="{{ url_for('portfolio_page') }}">Portfolio</a>
+              <!-- <a href="{{ url_for('portfolio_page') }}">Portfolio</a> -->
                 <a href="{{ url_for('blog_page') }}">Blog</a>
                 <a href="{{ url_for('contact_page') }}">Contact</a>
             </div>
