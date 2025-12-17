@@ -1644,7 +1644,7 @@ body.page-team-page .hero-section .hero-subtitle {
 /* About page hero title - smaller font size */
 body.page-about-page .hero-title {
   font-size: 3rem !important;
-  margin-top: 300px; /* adjust value as needed */
+  margin-top: 100px; /* adjust value as needed */
 } 
 
 body.page-about-page .hero-section .hero-subtitle {
