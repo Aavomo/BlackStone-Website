@@ -53,13 +53,14 @@
 </section>
 
 <!-- Portfolio Preview -->
+{% comment %}
 {% if featured_portfolio %}
 <section class="section portfolio-preview">
     <div class="section-header scroll-reveal">
         <h2>Featured Portfolio</h2>
         <p>Showcase of our successful investment facilitation projects across Africa.</p>
     </div>
-    
+   
     <div class="portfolio-grid">
         {% for project in featured_portfolio %}
         <div class="portfolio-card scroll-reveal">
@@ -81,12 +82,13 @@
         </div>
         {% endfor %}
     </div>
-    
+   
     <div class="text-center scroll-reveal" style="margin-top: 50px;">
         <a href="{{ url_for('portfolio_page') }}" class="btn-secondary">View Full Portfolio</a>
     </div>
 </section>
 {% endif %}
+{% endcomment %}
 
 <!-- Blog Preview -->
 {% if recent_posts %}
