@@ -2822,3 +2822,27 @@ body.page-about-page .hero-section .hero-subtitle {
   background: #1a1a1a;
   color: white;
 }
+/* Mobile Navigation Active State */
+@media (max-width: 768px) {
+  .nav.active {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    background: var(--dark-navy);
+    padding: 20px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    z-index: 1000;
+  }
+  
+  .nav.active a {
+    padding: 15px 0;
+    border-bottom: 1px solid rgba(201, 169, 97, 0.2);
+  }
+  
+  .nav.active a:last-child {
+    border-bottom: none;
+  }
+}
