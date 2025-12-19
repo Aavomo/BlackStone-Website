@@ -322,7 +322,7 @@ function initializeLoadingScreen() {
                 setTimeout(() => {
                     loadingScreen.remove();
                 }, 500);
-            }, 1000);
+            }, 0);
         });
     }
 }
