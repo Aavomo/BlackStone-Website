@@ -153,20 +153,33 @@ class SecureModelView(ModelView):
 
 
 from wtforms import PasswordField
-
 class UserAdminView(SecureModelView):
 
+    def is_protected(self, model):
+        # Choose ONE method of protection (recommended: username)
+        protected_usernames = ['admin']
+        return model.username in protected_usernames
+
     def on_model_delete(self, model):
-        if model.id == 1:  # Assuming the first admin has id=1
-            flash("Cannot delete the primary admin!", "error")
-            raise Exception("Cannot delete primary admin")
-        super().on_model_delete(model)
+        if self.is_protected(model):
+            flash("This user is protected and cannot be deleted.", "error")
+            raise Exception("Protected user cannot be deleted")
+
+        return super().on_model_delete(model)
 
     def on_model_change(self, form, model, is_created):
-        if model.id == 1:
-            # Prevent demoting primary admin
+        # Always keep protected user as admin
+        if self.is_protected(model):
             model.is_admin = True
-            
+
+        # Hash password if provided
+        if form.password.data:
+            model.set_password(form.password.data)
+
+        return super().on_model_change(form, model, is_created)
+
+
+
 class ContactAdminView(SecureModelView):
     column_list = ['name', 'email', 'service', 'status', 'created_at']
     column_searchable_list = ['name', 'email', 'message']
