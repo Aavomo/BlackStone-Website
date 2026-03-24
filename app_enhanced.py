@@ -151,6 +151,14 @@ class SecureModelView(ModelView):
     def inaccessible_callback(self, name, **kwargs):
         return redirect(url_for('admin_login'))
 
+
+class UserAdminView(SecureModelView):
+    form_columns = ['username', 'email', 'password_hash', 'is_admin']
+
+    def on_model_change(self, form, model, is_created):
+        # Hash password before saving
+        if form.password_hash.data:
+            model.set_password(form.password_hash.data)
 class ContactAdminView(SecureModelView):
     column_list = ['name', 'email', 'service', 'status', 'created_at']
     column_searchable_list = ['name', 'email', 'message']
@@ -258,7 +266,7 @@ admin = Admin(app, name='Blackstone EG Admin', index_view=DashboardView())
 admin.add_view(ContactAdminView(ContactSubmission, db.session, name='Contact Forms'))
 admin.add_view(BlogAdminView(BlogPost, db.session, name='Blog Posts'))
 admin.add_view(PortfolioAdminView(PortfolioItem, db.session, name='Portfolio'))
-admin.add_view(SecureModelView(User, db.session, name='Users'))
+admin.add_view(UserAdminView(User, db.session, name='Users'))
 admin.add_view(SecureModelView(CompanySettings, db.session, name='Settings'))
 
 # Utility Functions
