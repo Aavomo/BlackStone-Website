@@ -53,6 +53,7 @@ class User(UserMixin, db.Model):
     email = db.Column(db.String(120), unique=True, nullable=False)
     password_hash = db.Column(db.String(120), nullable=False)
     is_admin = db.Column(db.Boolean, default=False)
+    is_superadmin = db.Column(db.Boolean, default=False)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
 
     def set_password(self, password):
@@ -158,12 +159,20 @@ class UserAdminView(SecureModelView):
     form_extra_fields = {
         'password': PasswordField('Password')
     }
-
-    form_columns = ['username', 'email', 'password', 'is_admin']
+    form_columns = ['username', 'email', 'password', 'is_admin', 'is_superadmin']
 
     def on_model_change(self, form, model, is_created):
         if form.password.data:
             model.set_password(form.password.data)
+        
+        # Prevent non-superadmins from making someone superadmin
+        if not current_user.is_superadmin:
+            model.is_superadmin = model.is_superadmin or False
+
+    def on_model_delete(self, model):
+        if model.is_superadmin:
+            flash("You cannot delete a super admin!", "error")
+            raise Exception("Cannot delete super admin")
             
 class ContactAdminView(SecureModelView):
     column_list = ['name', 'email', 'service', 'status', 'created_at']
