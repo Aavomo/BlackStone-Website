@@ -152,13 +152,19 @@ class SecureModelView(ModelView):
         return redirect(url_for('admin_login'))
 
 
+from wtforms import PasswordField
+
 class UserAdminView(SecureModelView):
-    form_columns = ['username', 'email', 'password_hash', 'is_admin']
+    form_extra_fields = {
+        'password': PasswordField('Password')
+    }
+
+    form_columns = ['username', 'email', 'password', 'is_admin']
 
     def on_model_change(self, form, model, is_created):
-        # Hash password before saving
-        if form.password_hash.data:
-            model.set_password(form.password_hash.data)
+        if form.password.data:
+            model.set_password(form.password.data)
+            
 class ContactAdminView(SecureModelView):
     column_list = ['name', 'email', 'service', 'status', 'created_at']
     column_searchable_list = ['name', 'email', 'message']
