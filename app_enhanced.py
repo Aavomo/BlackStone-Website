@@ -155,26 +155,15 @@ class SecureModelView(ModelView):
 from wtforms import PasswordField
 
 class UserAdminView(SecureModelView):
+    form_extra_fields = {
+        'password': PasswordField('Password')
+    }
 
-    def is_protected(self, model):
-        return model.username == 'admin'  # your main account
-
-    def on_model_delete(self, model):
-        if self.is_protected(model):
-            flash("This account is protected and cannot be deleted.", "error")
-            return
-        return super().on_model_delete(model)
+    form_columns = ['username', 'email', 'password', 'is_admin']
 
     def on_model_change(self, form, model, is_created):
-        # Prevent demotion of protected account
-        if self.is_protected(model):
-            model.is_admin = True
-
-        # Password handling (your working logic)
-        if hasattr(form, 'password') and form.password.data:
+        if form.password.data:
             model.set_password(form.password.data)
-
-        return super().on_model_change(form, model, is_created)
 
 
 class ContactAdminView(SecureModelView):
