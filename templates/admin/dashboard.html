@@ -2,10 +2,22 @@
 
 {% block body %}
 <div class="admin-dashboard">
-    <div class="dashboard-header">
+<div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
+    <div>
         <h1>Dashboard Overview</h1>
         <p>Welcome to Blackstone EG & Partners Admin Panel</p>
     </div>
+    
+    <div>
+        <span style="margin-right:15px;">
+            Logged in as {{ current_user.username }}
+        </span>
+        <a href="{{ url_for('admin_logout') }}" 
+           style="padding:8px 15px; background:#dc3545; color:white; border-radius:5px; text-decoration:none;">
+            Logout
+        </a>
+    </div>
+</div>
     
     <div class="dashboard-stats">
         <div class="stat-card">
