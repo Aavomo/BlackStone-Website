@@ -158,10 +158,18 @@ class UserAdminView(SecureModelView):
     form_extra_fields = {
         'password': PasswordField('Password')
     }
-
     form_columns = ['username', 'email', 'password', 'is_admin']
 
+    # PREVENT DELETION OF YOUR MAIN ACCOUNT
+    def on_model_delete(self, model):
+        if model.username == 'admin': # Replace 'admin' with your actual username
+            raise Exception("The primary administrator account cannot be deleted.")
+
+    # PREVENT EDITING YOUR MAIN ACCOUNT BY OTHERS
     def on_model_change(self, form, model, is_created):
+        if not is_created and model.username == 'admin' and current_user.username != 'admin':
+            raise Exception("You do not have permission to modify the primary administrator.")
+        
         if form.password.data:
             model.set_password(form.password.data)
 
