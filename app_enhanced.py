@@ -20,7 +20,14 @@ app = Flask(__name__)
 
 # Configuration
 app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', secrets.token_hex(16))
-app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL', 'sqlite:///blackstone_eg.db')
+# --- DATABASE CONFIGURATION ---
+uri = os.environ.get('DATABASE_URL', 'sqlite:///blackstone_eg.db')
+if uri and uri.startswith("postgres://"):
+    # This fixes the incompatibility between Render/Neon and SQLAlchemy 1.4+
+    uri = uri.replace("postgres://", "postgresql://", 1)
+
+app.config['SQLALCHEMY_DATABASE_URI'] = uri
+# ------------------------------
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['UPLOAD_FOLDER'] = 'static/uploads'
 app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024  # 16MB max file size
