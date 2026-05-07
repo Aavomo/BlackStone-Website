@@ -562,18 +562,13 @@ def init_db():
         # Create admin user if doesn't exist
         admin_user = User.query.filter_by(username='admin').first()
         
-        if admin_user:
-            # FORCE RESET PASSWORD
-            admin_user.set_password('Black+Stone+68#')
-            admin_user.is_admin = True
-        
-        else:
+        if not admin_user:
             admin_user = User(
                 username='admin',
                 email='admin@blackstoneegpartners.com',
                 is_admin=True
             )
-            admin_user.set_password('NEW_STRONG_PASSWORD')
+            admin_user.set_password(os.environ.get('ADMIN_PASSWORD'))
             db.session.add(admin_user)
         
         # REMOVED: Sample blog posts block
