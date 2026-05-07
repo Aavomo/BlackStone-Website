@@ -564,7 +564,7 @@ def init_db():
         
         if admin_user:
             # FORCE RESET PASSWORD
-            admin_user.set_password('NEW_STRONG_PASSWORD')
+            admin_user.set_password('Black+Stone+68#')
             admin_user.is_admin = True
         
         else:
